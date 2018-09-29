@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="ur5" >
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find myur_description)/urdf/common.gazebo.xacro" />
+
+  <!-- ur5 -->
+  <xacro:include filename="$(find myur_description)/urdf/ur5.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ur5_robot prefix="" joint_limited="false"/>
+
+  <link name="world" />
+
+  <link name="body_link">
+    <visual>
+      <geometry>
+        <box size="0.4 .2 1.5"/>
+      </geometry>
+      <!--origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="black">
+        <color rgba="255 255 255 0"/>
+      </material-->
+    </visual>
+  </link>
+
+  <joint name="body_joint" type="fixed">
+    <parent link="world" />
+    <child link = "body_link" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+
+  <joint name="armbase_joint" type="fixed">
+    <parent link="body_link" />
+    <child link = "base_link" />
+    <origin xyz="0.1 0.1 0.6" rpy="${-0.5 * pi} 0.0 0.0" />
+  </joint>
+</robot>
